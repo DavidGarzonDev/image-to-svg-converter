@@ -1,0 +1,13 @@
+README.txt
+setup.py
+app/__init__.py
+app/cli.py
+app/converter.py
+converter_svg.egg-info/PKG-INFO
+converter_svg.egg-info/SOURCES.txt
+converter_svg.egg-info/dependency_links.txt
+converter_svg.egg-info/entry_points.txt
+converter_svg.egg-info/requires.txt
+converter_svg.egg-info/top_level.txt
+tests/test_cli.py
+tests/test_converter.py

@@ -1,0 +1,15 @@
+
+# Entorno virtual
+venv/
+
+# Archivos temporales
+__pycache__/
+*.pyc
+*.pyo
+
+# Configuración del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de pruebas y logs
+*.log

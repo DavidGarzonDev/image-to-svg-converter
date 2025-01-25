@@ -1,0 +1,12 @@
+Metadata-Version: 2.2
+Name: converter-svg
+Version: 1.0.0
+Summary: Una herramienta para convertir imágenes a SVG.
+Author: Tu Nombre
+Requires-Python: >=3.7
+Requires-Dist: Pillow
+Requires-Dist: svgwrite
+Dynamic: author
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
