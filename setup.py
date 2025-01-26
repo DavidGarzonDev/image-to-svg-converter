@@ -10,10 +10,10 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "converter-svg=app.cli:main",  # Comando que se ejecutará y función principal
+            "converter-svg=app.cli:main",  # Command to be executed and main function
         ],
     },
-    author="Tu Nombre",
-    description="Una herramienta para convertir imágenes a SVG.",
+    author="Juan David Garzon",
+    description="A tool to convert images to SVG.",
     python_requires=">=3.7",
 )

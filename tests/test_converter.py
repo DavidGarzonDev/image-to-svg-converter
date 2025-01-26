@@ -3,16 +3,16 @@ import pytest
 from PIL import Image
 from app.converter import convert_images_in_folder
 
-# Fixture de pytest para crear un directorio temporal
+# Fixture of pytest to create a temporary directory
 @pytest.fixture
 def setup_directories(tmpdir):
-    # Crear carpeta de entrada
+    # Create input folder
     input_folder = tmpdir.mkdir("test_input")
     output_folder = tmpdir.mkdir("test_output")
 
-    # Crear una imagen de prueba válida con Pillow
+    # Create a valid test image with Pillow
     test_image_path = input_folder.join("test_image.png")
-    image = Image.new("RGB", (100, 100), color=(255, 0, 0))  # Crear una imagen roja
+    image = Image.new("RGB", (100, 100), color=(255, 0, 0))  # Create a red image
     image.save(str(test_image_path))
 
     return input_folder, output_folder
@@ -20,22 +20,22 @@ def setup_directories(tmpdir):
 def test_image_to_svg_conversion(setup_directories):
     input_folder, output_folder = setup_directories
 
-    # Ejecutar la función de conversión
+    # Execute the conversion function
     convert_images_in_folder(str(input_folder), str(output_folder))
 
-    # Verificar que el archivo SVG se haya creado
+    # Verify that the SVG file has been created
     output_svg_path = os.path.join(str(output_folder), "test_image.svg")
-    assert os.path.exists(output_svg_path), f"El archivo SVG no se ha creado en {output_svg_path}"
+    assert os.path.exists(output_svg_path), f"SVG file has not been created in{output_svg_path}"
 
 def test_output_folder_creation(setup_directories):
     input_folder, output_folder = setup_directories
 
-    # Asegurarse de que la carpeta de salida existe
-    assert os.path.exists(str(output_folder)), f"La carpeta de salida {output_folder} no existe"
+    #  Make sure that the output folder exists.
+    assert os.path.exists(str(output_folder)), f"The output folder {output_folder} does not exist"
 
-    # Ejecutar la función de conversión
+    # Execute the conversion function
     convert_images_in_folder(str(input_folder), str(output_folder))
 
-    # Verificar que el archivo SVG se ha creado
+    # Verify that the SVG file has been created
     output_svg_path = os.path.join(str(output_folder), "test_image.svg")
-    assert os.path.exists(output_svg_path), f"El archivo SVG no se ha creado en {output_svg_path}"
+    assert os.path.exists(output_svg_path), f"SVG file has not been created in {output_svg_path}"

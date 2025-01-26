@@ -9,17 +9,17 @@ def main():
 
     args = parser.parse_args()
 
-    # Verificar si las carpetas existen
+    # Check if the folders exist
     if not os.path.exists(args.input_folder):
-        print(f"Error: La carpeta de entrada {args.input_folder} no existe.")
+        print(f" Error: The input folder{args.input_folder} does not exist.")
         return
 
     if not os.path.exists(args.output_folder):
         os.makedirs(args.output_folder)
 
-    # Llamar a la función para convertir las imágenes
+    # Calling the function to convert images
     convert_images_in_folder(args.input_folder, args.output_folder)
-    print(f"Conversión completa. Las imágenes SVG se han guardado en {args.output_folder}")
+    print(f"Conversion complete. SVG images have been saved in {args.output_folder}")
 
 if __name__ == "__main__":
     main()
