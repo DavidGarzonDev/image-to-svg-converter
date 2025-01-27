@@ -27,7 +27,7 @@ Este proyecto utiliza las siguientes librerías:
 ## Instalación
 1. **Clona el repositorio**:
    ```bash
-   git clone https://github.com/tu-usuario/converter-svg.git
+   git clone https://github.com/DavidGarzonDev/converter-svg.git
    cd converter-svg
    ```
 
