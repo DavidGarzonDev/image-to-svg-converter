@@ -2,54 +2,56 @@ from PIL import Image
 import svgwrite
 import os
 
-def image_to_svg(input_image_path, output_svg_path, scale=1):
+def open_and_resize_image(image_path, scale):
     """
-    Converts an image to SVG with resolution reduction.
-    :param input_image_path: Input image path.
-    :param output_svg_path: Path to the output SVG file.
-    :param scale: Scaling factor to reduce resolution (0.5 = 50% of original size).
+    Opens and resizes an image according to the scale factor.
+    :param image_path: Path to the input image.
+    :param scale: Scale factor to reduce resolution.
+    :return: Resized image and its dimensions.
     """
-    # Open image using Pillow
-    img = Image.open(input_image_path)
-    img = img.convert("RGBA")  # Convert to RGBA to handle transparencies
-
-    # Reduce image size
+    img = Image.open(image_path).convert("RGBA")
     width, height = img.size
-    new_width = max(1, int(width * scale))  # Make sure it is no smaller than 1 pixel.
+    new_width = max(1, int(width * scale))
     new_height = max(1, int(height * scale))
     img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+    return img, new_width, new_height
 
-    # Create an SVG file
-    dwg = svgwrite.Drawing(output_svg_path, size=(new_width, new_height))
-    # Get pixels of the resized image
+def generate_svg(img, output_svg_path, width, height):
+    """
+    Generates an SVG file from a resized image.
+    :param img: Resized image.
+    :param output_svg_path: Path to the output SVG file.
+    :param width: Image width.
+    :param height: Image height.
+    """
+    dwg = svgwrite.Drawing(output_svg_path, size=(width, height))
     pixels = img.load()
 
-    # Create a rectangle for each pixel
-    for x in range(new_width):
-        for y in range(new_height):
-            r, g, b, a = pixels[x, y]  # Includes alpha channel (transparency)
-            if a > 0:  # Only adds visible pixels
+    for x in range(width):
+        for y in range(height):
+            r, g, b, a = pixels[x, y]
+            if a > 0:
                 dwg.add(dwg.rect(insert=(x, y), size=(1, 1), fill=svgwrite.rgb(r, g, b, '%')))
-
+    
     dwg.save()
-    print(f"SVG generated")
+    print(f"SVG generated: {output_svg_path}")
+
+def image_to_svg(input_image_path, output_svg_path, scale=1):
+    """
+    Converts an image to SVG format with resolution reduction.
+    """
+    img, new_width, new_height = open_and_resize_image(input_image_path, scale)
+    generate_svg(img, output_svg_path, new_width, new_height)
 
 def convert_images_in_folder(input_folder, output_folder, scale=0.5):
     """
     Converts all images in a folder to SVG format.
-    :param input_folder: Input folder with images.
-    :param output_folder: Output folder for SVG files.
-    :param scale: Scale factor to reduce resolution.
     """
-    # Create the output folder if it does not exist
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
-    # Scroll through all files in the input folder
     for filename in os.listdir(input_folder):
-        input_path = os.path.join(input_folder, filename)
-
-        #  Filter only images (you can add more extensions if needed)
         if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+            input_path = os.path.join(input_folder, filename)
             output_svg_path = os.path.join(output_folder, f"{os.path.splitext(filename)[0]}.svg")
-            image_to_svg(input_path, output_svg_path, scale=scale)
+            image_to_svg(input_path, output_svg_path, scale)
